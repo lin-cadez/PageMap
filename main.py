@@ -10,7 +10,10 @@ net = Network()
 
 def extract_domain(url):
     extracted = tldextract.extract(url)
-    return f"{extracted.domain}.{extracted.suffix}"
+    subdomain = f"{extracted.subdomain}." if extracted.subdomain else ''  # Include subdomain if it exists
+    return f"{subdomain}{extracted.domain}.{extracted.suffix}"
+
+
 
 def get_all_links(url):
     # Send a GET request to the URL
