@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "cadez.eu", "label": "cadez.eu", "shape": "dot"}, {"color": "#97c2fc", "id": "skvarca.net", "label": "skvarca.net", "shape": "dot"}, {"color": "#97c2fc", "id": "majmohar.me", "label": "majmohar.me", "shape": "dot"}, {"color": "#97c2fc", "id": "jonpecar.me", "label": "jonpecar.me", "shape": "dot"}, {"color": "#97c2fc", "id": "jakakovac.si", "label": "jakakovac.si", "shape": "dot"}, {"color": "#97c2fc", "id": "cernetic.cc", "label": "cernetic.cc", "shape": "dot"}, {"color": "#97c2fc", "id": "\\.", "label": "\\.", "shape": "dot"}, {"color": "#97c2fc", "id": ".tel", "label": ".tel", "shape": "dot"}, {"color": "#97c2fc", "id": "kralj.io", "label": "kralj.io", "shape": "dot"}, {"color": "#97c2fc", "id": "kibertalent.si", "label": "kibertalent.si", "shape": "dot"}, {"color": "#97c2fc", "id": "cansat.si", "label": "cansat.si", "shape": "dot"}, {"color": "#97c2fc", "id": "sijanec.eu", "label": "sijanec.eu", "shape": "dot"}, {"color": "#97c2fc", "id": "firstinspires.org", "label": "firstinspires.org", "shape": "dot"}, {"color": "#97c2fc", "id": "firstglobal.si", "label": "firstglobal.si", "shape": "dot"}, {"color": "#97c2fc", "id": "aikenahac.com", "label": "aikenahac.com", "shape": "dot"}, {"color": "#97c2fc", "id": "babnik.io", "label": "babnik.io", "shape": "dot"}, {"color": "#97c2fc", "id": "ecsc.eu", "label": "ecsc.eu", "shape": "dot"}, {"color": "#97c2fc", "id": "govekar.net", "label": "govekar.net", "shape": "dot"}, {"color": "#97c2fc", "id": "thesuperlab.tk", "label": "thesuperlab.tk", "shape": "dot"}, {"color": "#97c2fc", "id": "nejckrasevec.si", "label": "nejckrasevec.si", "shape": "dot"}, {"color": "#97c2fc", "id": "fortuna.wf", "label": "fortuna.wf", "shape": "dot"}, {"color": "#97c2fc", "id": ".", "label": ".", "shape": "dot"}, {"color": "#97c2fc", "id": "gribanica.me", "label": "gribanica.me", "shape": "dot"}, {"color": "#97c2fc", "id": "gapi.me", "label": "gapi.me", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": "cadez.eu", "to": "skvarca.net"}, {"from": "cadez.eu", "to": "majmohar.me"}, {"from": "cadez.eu", "to": "jonpecar.me"}, {"from": "cadez.eu", "to": "jakakovac.si"}, {"from": "cadez.eu", "to": "cernetic.cc"}, {"from": "skvarca.net", "to": "skvarca.net"}, {"from": "majmohar.me", "to": "\\."}, {"from": "jonpecar.me", "to": ".tel"}, {"from": "jakakovac.si", "to": "kralj.io"}, {"from": "jakakovac.si", "to": "kibertalent.si"}, {"from": "jakakovac.si", "to": "cansat.si"}, {"from": "jakakovac.si", "to": "sijanec.eu"}, {"from": "jakakovac.si", "to": "firstinspires.org"}, {"from": "jakakovac.si", "to": "firstglobal.si"}, {"from": "jakakovac.si", "to": "aikenahac.com"}, {"from": "jakakovac.si", "to": "babnik.io"}, {"from": "jakakovac.si", "to": "ecsc.eu"}, {"from": "jakakovac.si", "to": "govekar.net"}, {"from": "jakakovac.si", "to": "thesuperlab.tk"}, {"from": "jakakovac.si", "to": "nejckrasevec.si"}, {"from": "jakakovac.si", "to": "cernetic.cc"}, {"from": "cernetic.cc", "to": "fortuna.wf"}, {"from": "cernetic.cc", "to": "kralj.io"}, {"from": "cernetic.cc", "to": "skvarca.net"}, {"from": "cernetic.cc", "to": "majmohar.me"}, {"from": "cernetic.cc", "to": "."}, {"from": "cernetic.cc", "to": "govekar.net"}, {"from": "cernetic.cc", "to": "babnik.io"}, {"from": "cernetic.cc", "to": "aikenahac.com"}, {"from": "cernetic.cc", "to": "gribanica.me"}, {"from": "cernetic.cc", "to": "gapi.me"}, {"from": "cernetic.cc", "to": "nejckrasevec.si"}, {"from": "cernetic.cc", "to": "cernetic.cc"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
