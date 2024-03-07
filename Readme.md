@@ -25,6 +25,6 @@ RunMe.bat
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the LICENSE.
 
 ### If you want to contribute please open pull request.
